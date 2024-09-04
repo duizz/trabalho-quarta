@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório do Projeto: Construção de um Semáforo Básico com Arduino</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+        }
+        p, ul {
+            margin-bottom: 20px;
+        }
+        code {
+            display: block;
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-left: 4px solid #ccc;
+            margin-bottom: 20px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <h1>Relatório do Projeto: Construção de um Semáforo Básico com Arduino</h1>
+    <p><strong>Integrantes:</strong> João Pedro Costa, Filipe André Nunes, Julio Cesar Florencio, Luiz Felipe Guerra, Felipe Silva da Silva.</p>
+    
+    <h2>1. Objetivo do Projeto</h2>
+    <p>O objetivo deste projeto é construir um semáforo básico utilizando a plataforma Arduino. A proposta inclui:</p>
+    <ul>
+        <li>Testar o circuito no Tinkercad, uma ferramenta de simulação online para projetos de eletrônica.</li>
+        <li>Usar o Arduino Cloud para conectar o Arduino à máquina física, permitindo controlar o semáforo remotamente.</li>
+    </ul>
+    
+    <h2>2. Ferramentas e Materiais Utilizados</h2>
+    <ul>
+        <li><strong>Arduino UNO:</strong> A placa principal usada para controlar o semáforo.</li>
+        <li><strong>LEDs:</strong> Três LEDs (vermelho, amarelo e verde) para simular as luzes do semáforo.</li>
+        <li><strong>Resistores:</strong> Para limitar a corrente que passa pelos LEDs.</li>
+        <li><strong>Protoboard e Jumpers:</strong> Para conectar os componentes eletrônicos.</li>
+        <li><strong>Tinkercad:</strong> Plataforma online para simulação do circuito.</li>
+        <li><strong>Arduino Cloud:</strong> Serviço de nuvem que permite a conexão remota e monitoramento do Arduino físico.</li>
+    </ul>
+    
+    <h2>3. Montagem do Circuito</h2>
+    <p>O circuito foi montado conforme a seguinte estrutura:</p>
+    <ul>
+        <li>Os três LEDs (vermelho, amarelo e verde) foram conectados aos pinos digitais do Arduino (pinos 8, 9 e 10, respectivamente).</li>
+        <li>Cada LED foi conectado em série com um resistor de 220Ω para proteger os LEDs contra sobrecarga de corrente.</li>
+        <li>O protoboard foi usado para facilitar as conexões entre os componentes.</li>
+        <li>O circuito foi simulado e testado no Tinkercad para garantir que as ligações e o código estivessem corretos.</li>
+    </ul>
+    
+    <h2>4. Código do Arduino</h2>
+    <p>O código foi escrito na IDE do Arduino, utilizando funções básicas para alternar entre os estados do semáforo. O loop principal do código controla o tempo que cada LED permanece aceso, simulando o funcionamento real de um semáforo.</p>
+    <p>Exemplo de Código:</p>
+    <code>
+        int red = 8;<br>
+        int yellow = 9;<br>
+        int green = 10;<br><br>
+
+        void setup() {<br>
+            &nbsp;&nbsp;pinMode(red, OUTPUT);<br>
+            &nbsp;&nbsp;pinMode(yellow, OUTPUT);<br>
+            &nbsp;&nbsp;pinMode(green, OUTPUT);<br>
+        }<br><br>
+
+        void loop() {<br>
+            &nbsp;&nbsp;digitalWrite(green, HIGH);<br>
+            &nbsp;&nbsp;delay(5000); // 5 segundos<br>
+            &nbsp;&nbsp;digitalWrite(green, LOW);<br><br>
+            
+            &nbsp;&nbsp;digitalWrite(yellow, HIGH);<br>
+            &nbsp;&nbsp;delay(2000); // 2 segundos<br>
+            &nbsp;&nbsp;digitalWrite(yellow, LOW);<br><br>
+            
+            &nbsp;&nbsp;digitalWrite(red, HIGH);<br>
+            &nbsp;&nbsp;delay(5000); // 5 segundos<br>
+            &nbsp;&nbsp;digitalWrite(red, LOW);<br>
+        }
+    </code>
+    
+    <h2>5. Teste no Tinkercad</h2>
+    <p>Após a montagem do circuito e do código, o projeto foi simulado no Tinkercad. Essa plataforma permite verificar o funcionamento do semáforo antes de conectar ao hardware físico. Durante o teste, foram feitas algumas verificações:</p>
+    <ul>
+        <li>Temporização correta das luzes.</li>
+        <li>Transições suaves entre os estados do semáforo.</li>
+    </ul>
+    
+    <h2>6. Conexão com o Arduino Cloud</h2>
+    <p>A próxima etapa foi conectar o Arduino ao Arduino Cloud para possibilitar o controle remoto. A integração com a nuvem foi feita para monitorar o estado do semáforo e, potencialmente, enviar comandos para modificar o comportamento do semáforo em tempo real.</p>
+    <p>Passos:</p>
+    <ul>
+        <li>Criar um dispositivo no Arduino Cloud e configurar a conexão com o Arduino.</li>
+        <li>Programar o código para sincronizar os estados do semáforo com a nuvem.</li>
+        <li>Testar a interação remota e garantir que as alterações no painel do Arduino Cloud refletissem no hardware físico.</li>
+    </ul>
+    
+    <h2>7. Resultados e Conclusões</h2>
+    <p>O projeto de construção de um semáforo básico usando Arduino foi bem-sucedido. A simulação no Tinkercad ajudou a validar o circuito e o código antes de implementá-los no hardware físico. A integração com o Arduino Cloud permitiu monitorar e controlar o semáforo remotamente, mostrando a flexibilidade e a conectividade da plataforma Arduino.</p>
+    
+    <h2>8. Imagens do projeto</h2>
+        <img src="./foto1.png" alt="">
+        <img src="./foto2.png" alt="">
+        <video src="">Video sobre o trabalho</video>
