@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório 2</title>
+
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #ff4500;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #ff4500;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #ff4500;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        p, ul {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        code {
+            display: block;
+            background-color: #e0e0e0;
+            padding: 15px;
+            border-left: 5px solid #e28000;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" target="_self">Voltar</a>
+    <h1>Relatório do Projeto: Sensor de Proximidade com Arduino e LED</h1>
+
+    <p><strong>Integrantes</strong>: João Pedro Costa, Filipe André Nunes, Julio Cesar Florencio, Luiz Felipe Guerra, Felipe Silva da Silva.</p>
+<div id="objetivo">
+    <h2>1. Objetivo do Projeto</h2>
+    <p>O objetivo deste projeto é desenvolver um sistema de detecção de proximidade utilizando um sensor ultrassônico HC-SR04 e um Arduino. O sistema deve acionar um LED sempre que um objeto estiver a uma distância de 10 cm ou menos do sensor e desligar o LED quando o objeto estiver a uma distância maior. Este projeto simula um detector de obstáculos simples, com uso prático em robótica e sistemas de automação.</p>
+</div>
+
+<div id="ferramentas">
+    <h2>2. Ferramentas e Materiais Utilizados</h2>
+    <ul>
+        <li>Hardware:
+            <ul>
+                <li>
+                    Arduino Uno R3
+                </li>
+                <li>
+                    Sensor Ultrassônico HC-SR04
+                </li>
+                <li>
+                    LED
+                </li>
+                <li>
+                    Resistor de 220Ω
+                </li>
+                <li>
+                    Jumpers (fios de conexão)
+                </li>
+                <li>
+                    Protoboard (opcional, para facilitar a montagem)
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            Software:
+            <ul>
+                <li>
+                    <strong>Ambiente de simulação Tinkercad</strong>, que permite criar e testar circuitos eletrônicos de forma virtual.
+                </li>
+                <li>
+                    <strong>IDE do Arduino (no Tinkercad)</strong>, para escrever e simular o código de controle do sistema.
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div id="montagem">
+    <h2>3. Montagem do Circuito</h2>
+    <p>O circuito foi montado conforme descrito abaixo:
+        Conexões do Sensor Ultrassônico HC-SR04:</p>
+    <ol type="1">
+        <li>
+            VCC (pino do sensor) conectado ao 5V do Arduino.
+        </li>
+        <li>
+            GND (pino do sensor) conectado ao GND do Arduino.
+        </li>
+        <li>
+            Trig (pino do sensor) conectado ao pino digital 9 do Arduino.
+        </li>
+        <li>
+            Echo (pino do sensor) conectado ao pino digital 10 do Arduino.
+        </li>
+    </ol>
+    <p>Conexões do LED:</p>
+    <ol type="1">
+        <li>Anodo (perna longa do LED) conectado ao pino digital 13 do Arduino.</li>
+        <li>Catodo (perna curta do LED) conectado a um resistor de 220Ω, e a outra ponta do resistor conectada ao GND do Arduino.</li>
+    </ol>
+</div>
+
+<div id="codigo">
+    <h2>4. Código do Arduino</h2>
+    <p>O código foi implementado na IDE do Arduino (dentro do Tinkercad) e é responsável por controlar o sensor ultrassônico e acionar o LED com base na distância detectada. O código a seguir foi utilizado:</p>
+    <code>
+        const int trigPin = 9;
+        const int echoPin = 10;
+        const int ledPin = 13;
+
+        void setup() {
+        pinMode(trigPin, OUTPUT);
+        pinMode(echoPin, INPUT);
+        pinMode(ledPin, OUTPUT);
+        
+        Serial.begin(9600);
+        }
+
+        void loop() {
+        long duration;
+        int distance;
+
+        digitalWrite(trigPin, LOW);
+        delayMicroseconds(2);
+        digitalWrite(trigPin, HIGH);
+        delayMicroseconds(10);
+        digitalWrite(trigPin, LOW);
+
+        duration = pulseIn(echoPin, HIGH);
+
+        distance = duration * 0.034 / 2;
+
+        Serial.print("Distancia: ");
+        Serial.print(distance);
+        Serial.println(" cm");
+
+        if (distance <= 10) {
+            digitalWrite(ledPin, HIGH); // Acender o LED
+        } else {
+            digitalWrite(ledPin, LOW);  // Apagar o LED
+        }
+        delay(100);
+        }
+    </code>
+<div>
+
+<div id="teste">
+    <h2>5. Teste no Tinkercad</h2>
+    <p>O circuito foi simulado no ambiente Tinkercad:</p>
+        <ol type="1">
+            <li><strong>Montagem Virtual:</strong> O sensor HC-SR04 foi conectado ao Arduino conforme o esquema elétrico, e o LED foi posicionado corretamente com o resistor em série.</li>
+            <li><strong>Simulação do Código</strong>: O código foi carregado no Arduino virtual do Tinkercad, e a simulação foi iniciada.</li>
+            <li><strong>Teste da Proximidade</strong>: A régua do sensor ultrassônico no Tinkercad foi utilizada para ajustar a distância de um objeto. Quando o objeto estava a 10 cm ou menos, o LED acendia. Ao afastar o objeto para uma distância maior, o LED apagava.</li>
+        </ol>
+</div>
+
+<div id="resultado">
+    <h2>6. Resultados</h2>
+    <p>Os resultados obtidos durante a simulação foram satisfatórios. O sistema respondeu corretamente à proximidade de um objeto:</p>
+    <ul>
+        <li>Quando o objeto estava a 10 cm ou menos do sensor, o LED acendia.</li>
+        <li>Quando o objeto estava a uma distância maior que 10 cm, o LED apagava.</li>
+    </ul>
+    <p>O funcionamento do sensor ultrassônico e o controle do LED pelo Arduino seguiram o comportamento esperado, comprovando a eficácia do sistema de detecção de proximidade.</p>
+</div>
+
+<div id="conclusao">
+    <h2>7. Conclusão</h2>
+    <p>O projeto alcançou seu objetivo de implementar um sistema simples de detecção de proximidade usando um sensor ultrassônico HC-SR04 e um LED controlado por um Arduino. A simulação no Tinkercad demonstrou que o sistema é capaz de acender e apagar o LED de acordo com a distância do objeto detectado, permitindo a visualização em tempo real. Este projeto pode ser ampliado para sistemas mais complexos de detecção de obstáculos, automação de iluminação, ou mesmo controle de robôs.
+
+    O uso do Tinkercad para simulação também mostrou-se uma ferramenta eficaz para a prototipagem virtual antes da implementação prática.</p>
+</div>
+
+<div id="imagens">
+    <h2>8. Imagens do Projeto</h2>
+    <img src="../imgs/rel-2/foto1.png" alt="foto-projeto">
+</div>
+</body>
+</html>
