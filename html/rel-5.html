@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatório: Controle de Cor de LED RGB com Potenciômetros no Arduino</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #ff4500;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #ff4500;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #ff4500;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        p, ul {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        code {
+            display: block;
+            background-color: #e0e0e0;
+            padding: 15px;
+            border-left: 5px solid #e28000;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" target="_self">Voltar</a>
+    <h1>Relatório: Controle de Cor de LED RGB com Potenciômetros no Arduino</h1>
+
+    <p><strong>Integrantes</strong>: João Pedro Costa, Filipe André Nunes, Julio Cesar Florencio, Luiz Felipe Guerra, Felipe Silva da Silva.</p>
+
+    <h2>1. Objetivo</h2>
+    <p>O objetivo deste projeto é controlar a cor de um LED RGB usando três potenciômetros conectados a um Arduino, onde cada potenciômetro ajusta uma das cores primárias (vermelho, verde e azul). Com isso, o usuário pode criar diversas combinações de cores ao variar a intensidade das três cores de forma analógica.</p>
+
+    <h2>2. Ferramentas e Materiais Utilizados</h2>
+    <ul>
+        <li>Arduino Uno (ou qualquer placa compatível)</li>
+        <li>1 LED RGB (ou 3 LEDs separados: vermelho, verde e azul)</li>
+        <li>3 Potenciômetros (de 10kΩ)</li>
+        <li>3 Resistores (de 220Ω)</li>
+        <li>Protoboard (para montagem dos componentes)</li>
+        <li>Fios Jumpers (para conexões)</li>
+        <li>Computador com Arduino IDE (para escrever e enviar o código ao Arduino)</li>
+        <li>Tinkercad (para simulação e teste virtual do circuito)</li>
+    </ul>
+
+    <h2>3. Montagem do Circuito</h2>
+    <p>A montagem do circuito foi realizada conforme as etapas a seguir:</p>
+    <ul>
+        <li><strong>LED RGB</strong>: Conectamos o cátodo comum do LED RGB ao terra (GND) do Arduino. Os pinos correspondentes às cores vermelho, verde e azul foram conectados aos pinos digitais PWM 9, 10 e 11 do Arduino, respectivamente, por meio de resistores de 220Ω para limitar a corrente.</li>
+        <li><strong>Potenciômetros</strong>: Cada potenciômetro foi conectado da seguinte forma:
+            <ul>
+                <li>O terminal central (wiper) foi conectado aos pinos analógicos A0, A1 e A2 do Arduino.</li>
+                <li>Um terminal lateral foi conectado ao 5V, enquanto o outro terminal lateral foi conectado ao GND.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <h3>Esquema das Conexões:</h3>
+    <table>
+        <tr>
+            <th>Componente</th>
+            <th>Conexão com Arduino</th>
+        </tr>
+        <tr>
+            <td>LED RGB (Pino R)</td>
+            <td>Pino 9 (PWM)</td>
+        </tr>
+        <tr>
+            <td>LED RGB (Pino G)</td>
+            <td>Pino 10 (PWM)</td>
+        </tr>
+        <tr>
+            <td>LED RGB (Pino B)</td>
+            <td>Pino 11 (PWM)</td>
+        </tr>
+        <tr>
+            <td>Potenciômetro 1</td>
+            <td>A0</td>
+        </tr>
+        <tr>
+            <td>Potenciômetro 2</td>
+            <td>A1</td>
+        </tr>
+        <tr>
+            <td>Potenciômetro 3</td>
+            <td>A2</td>
+        </tr>
+        <tr>
+            <td>Cátodo do LED RGB</td>
+            <td>GND</td>
+        </tr>
+        <tr>
+            <td>Terminal lateral Potenciômetros</td>
+            <td>5V e GND</td>
+        </tr>
+    </table>
+
+    <h2>4. Código do Arduino</h2>
+    <code>
+
+        int pinRed = 9;<br>
+        int pinGreen = 10;<br>
+        int pinBlue = 11;<br><br>
+
+        int potRed = A0;<br>
+        int potGreen = A1;<br>
+        int potBlue = A2;<br><br>
+
+        void setup() {<br>
+          pinMode(pinRed, OUTPUT);<br>
+          pinMode(pinGreen, OUTPUT);<br>
+          pinMode(pinBlue, OUTPUT);<br><br>
+
+          pinMode(potRed, INPUT);<br>
+          pinMode(potGreen, INPUT);<br>
+          pinMode(potBlue, INPUT);<br>
+        }<br><br>
+
+        void loop() {<br>
+          int valueRed = analogRead(potRed);<br>
+          int valueGreen = analogRead(potGreen);<br>
+          int valueBlue = analogRead(potBlue);<br><br>
+
+          valueRed = map(valueRed, 0, 1023, 0, 255);<br>
+          valueGreen = map(valueGreen, 0, 1023, 0, 255);<br>
+          valueBlue = map(valueBlue, 0, 1023, 0, 255);<br><br>
+
+          analogWrite(pinRed, valueRed);<br>
+          analogWrite(pinGreen, valueGreen);<br>
+          analogWrite(pinBlue, valueBlue);<br><br>
+
+          delay(50);<br>
+        }
+    </code>
+
+    <h2>5. Teste no Tinkercad</h2>
+    <p>Após a montagem física do circuito, o mesmo foi replicado no Tinkercad, uma plataforma online para simulação de circuitos eletrônicos. No Tinkercad, o circuito foi testado com sucesso, onde ao girar os potenciômetros, a cor do LED RGB mudava conforme esperado, variando a intensidade de cada cor de forma suave.</p>
+    <p>O Tinkercad permitiu simular o comportamento do código em tempo real, confirmando a funcionalidade da leitura dos potenciômetros e o controle de PWM do LED RGB.</p>
+
+    <h2>6. Resultados</h2>
+    <p>O projeto alcançou os resultados esperados:</p>
+    <ul>
+        <li>Ao girar os potenciômetros, a intensidade de cada cor (vermelho, verde e azul) do LED RGB foi ajustada conforme o movimento do eixo de cada potenciômetro.</li>
+        <li>A combinação de valores das três cores permitiu criar uma ampla gama de cores diferentes, comprovando o controle individual de cada cor via potenciômetros.</li>
+        <li>Quando todos os potenciômetros estavam em valores baixos, o LED permaneceu apagado.</li>
+        <li>Quando todos estavam no valor máximo, o LED emitia luz branca, resultado da mistura de todas as cores em alta intensidade.</li>
+        <li>Combinações intermediárias resultaram em cores como ciano, magenta, amarelo, entre outras.</li>
+    </ul>
+
+    <h2>7. Conclusão</h2>
+    <p>Este projeto demonstrou de maneira eficiente o controle analógico de um LED RGB usando potenciômetros. A utilização dos potenciômetros para ajustar individualmente as cores primárias possibilitou criar inúmeras combinações de cores, o que pode ser aplicado em projetos de iluminação e efeitos visuais. Além disso, o uso de PWM no Arduino para controle de LEDs RGB mostrou-se uma solução eficaz e simples para modulação de intensidade de luz.</p>
+    <p>O uso da simulação no Tinkercad auxiliou na validação e na depuração do circuito antes da montagem física, o que garantiu um processo de desenvolvimento mais eficiente.</p>
+
+    <h2>8. Imagens do Projeto</h2>
+    <video width="600" controls>
+        <source src="../imgs/rel-4/WhatsApp Video 2024-09-18 at 20.41.53.mp4" type="video/mp4">
+
+</body>
+</html>
