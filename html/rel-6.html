@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatorio 6</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        a {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 20px;
+            background-color: #ff4500;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #ff4500;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #ff4500;
+            border-bottom: 2px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        p, ul {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+        }
+
+        code {
+            display: block;
+            background-color: #e0e0e0;
+            padding: 15px;
+            border-left: 5px solid #e28000;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            margin-bottom: 20px;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="../index.html" target="_self">Voltar</a>
+    <h1>Relatório 6: Controle de LED com Botão usando Arduino</h1>
+
+    <div id="objetivo">
+        <h2>Objetivo</h2>
+        <p>
+            O objetivo deste projeto é construir um circuito simples usando um Arduino, um botão e um LED. 
+            Quando o botão for pressionado, o LED acenderá, e quando o botão for solto, o LED se apagará. 
+            Este projeto é uma introdução ao uso de botões e LEDs no controle de entradas e saídas digitais 
+            em microcontroladores como o Arduino.
+        </p>
+    </div>
+
+    <div id="ferramentas">
+        <h2>Ferramentas e Materiais Utilizados</h2>
+        <ul>
+            <li>1 Arduino Uno</li>
+            <li>1 Protoboard</li>
+            <li>1 LED (vermelho)</li>
+            <li>1 Resistor de 220 ohms</li>
+            <li>1 Botão push-button</li>
+            <li>Fios jumper</li>
+            <li>Cabo USB para conexão com o Arduino</li>
+            <li>Computador com software Arduino IDE</li>
+        </ul>
+    </div>
+
+    <div id="montagem">
+        <h2>Montagem do Circuito</h2>
+        <p>
+            O circuito foi montado da seguinte forma:
+        </p>
+        <ul>
+            <li>O pino positivo do LED foi conectado ao pino digital 3 do Arduino, enquanto o pino negativo foi conectado ao GND através de um resistor de 220 ohms.</li>
+            <li>O botão foi conectado ao pino digital 7 do Arduino e à alimentação de 5V. O outro terminal do botão foi conectado ao GND, utilizando o recurso de <code>INPUT_PULLUP</code> para garantir a leitura correta do botão.</li>
+            <li>Todos os componentes foram conectados ao Arduino e montados em uma protoboard para facilitar o desenvolvimento.</li>
+        </ul>
+    </div>
+
+    <div id="code">
+        <h2>Código do Arduino</h2>
+        <code>
+            const int button_pin = 7;<br>
+            const int led_pin = 3;<br>
+            int buttonState = 0;<br><br>
+
+            void setup(){<br>
+                pinMode(led_pin, OUTPUT);<br>
+                pinMode(button_pin, INPUT_PULLUP);<br>
+            }<br><br>
+
+            void loop(){<br>
+                buttonState = digitalRead(button_pin);<br><br>
+
+                if(buttonState == LOW) {<br>
+                    digitalWrite(led_pin, HIGH);<br>
+                } else {<br>
+                    digitalWrite(led_pin, LOW);<br>
+                }<br>
+            }<br>
+        </code>
+    </div>
+
+    <div id="test">
+        <h2>Teste no Tinkercad</h2>
+        <p>
+            Antes da implementação física, o circuito foi simulado no Tinkercad, uma plataforma de simulação online. 
+            A simulação demonstrou que o botão controlava corretamente o LED, que acendia quando o botão era pressionado 
+            e apagava quando era liberado. O comportamento observado confirmou que o código e o circuito estavam funcionais.
+        </p>
+    </div>
+
+    <div id="results">
+        <h2>Resultados</h2>
+        <p>
+            O circuito funcionou conforme o esperado. Ao pressionar o botão, o LED acendeu, e ao soltar o botão, 
+            ele se apagou. Não houve problemas no comportamento do sistema, e a implementação prática correspondeu 
+            à simulação feita no Tinkercad.
+        </p>
+    </div>
+
+    <div id="conclusion">
+        <h2>Conclusão</h2>
+        <p>
+            Este projeto simples demonstrou o uso básico de entradas digitais com o Arduino, usando um botão para controlar um LED. 
+            A integração de componentes como resistores, botões e LEDs, junto ao código do Arduino, permitiu o aprendizado prático 
+            sobre o controle de dispositivos eletrônicos. O teste no Tinkercad foi uma ferramenta valiosa para garantir que o circuito 
+            funcionasse corretamente antes de sua montagem física.
+        </p>
+    </div>
+
+    <div id="images_project">
+        <h2>Imagens do Projeto</h2>
+
+        <video width="600" controls>
+            <source src="../imgs/rel-6/video1.mp4" type="video/mp4">
+        </video>
+        <video width="600" controls>
+            <source src="../imgs/rel-6/video2.mp4" type="video/mp4">
+        </video>
+    </div>
+
+</body>
+</html>
