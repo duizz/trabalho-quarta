@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Relatório 7</title>
+    <link href="../css/relatorios.css" rel="stylesheet">
+  </head>
+  <body>
+    <a href="../index.html" target="_self">Voltar</a>
+    <h1>Relatório 7: Micro Servo e sensor Ultrasonico HC-SR04</h1>
+
+    <div class="objetivo">
+     <h2>Objetivo</h2>
+    <p>O objetivo deste relatório é descrever a implementação de um sistema de controle utilizando um micro servo motor e o sensor ultrassônico HC-SR04, visando medir distâncias e posicionar o servo motor de acordo com os dados coletados.</p>
+   </div>
+
+    <div class="ferramentas">
+          <h2>Ferramentas</h2>
+    <ul>
+        <li>Arduino Uno</li>
+        <li>Micro Servo Motor</li>
+        <li>Sensor Ultrassônico HC-SR04</li>
+        <li>Fios de conexão</li>
+        <li>Protoboard</li>
+        <li>IDE Arduino</li>
+    </ul>
+
+    </div>
+
+    <div class="montagem">
+      <h2>Montagem</h2>
+      <p>A montagem consiste em conectar o sensor HC-SR04 e o micro servo ao Arduino. O pino Trig do sensor deve ser ligado a um pino digital do Arduino, assim como o Echo. O servo deve ser conectado a outro pino digital. A alimentação deve ser feita com 5V e GND.</p>
+    </div>
+
+    <div class="code">
+      <code>
+        #include <Servo.h>
+        int trig = 12;
+        int echo = 11;
+
+        Servo s;
+        int pin = 9;
+
+        void setup() {
+          Serial.begin(9600);
+          s.attach(pin);
+  
+          pinMode(trig, OUTPUT);
+          pinMode(echo, INPUT);
+  
+          s.write(0);
+        }
+
+        void loop() {
+  
+        long duration;
+        int distance;
+  
+        digitalWrite(trig, LOW);
+        delayMicroseconds(2);
+        digitalWrite(trig, HIGH);
+        delayMicroseconds(10);
+        digitalWrite(trig, LOW);
+  
+        duration = pulseIn(echo, HIGH);
+        distance = duration * 0.034 / 2;
+  
+        Serial.print("Distância: ");
+        Serial.print(distance);
+        Serial.println(" cm");
+  
+        if(distance <= 50){
+          s.write(90);
+        }else{
+          s.write(180);
+          }
+        }
+      </code>
+    </div>
+
+    <div class="test">
+
+    <h2>Testes</h2>
+    <p>Os testes foram realizados variando a distância entre o sensor e os objetos. Foi observado que o servo motor respondia de acordo com as distâncias medidas, movendo-se para a posição correspondente ao valor obtido pelo sensor ultrassônico.</p>
+      
+    </div>
+
+    <div class="results">
+    <h2>Resultados</h2>
+    <p>Os resultados mostraram uma boa precisão nas medições de distância. O servo motor se posicionou corretamente conforme as variações de distância, demonstrando a funcionalidade do sistema integrado.</p>
+    </div>
+
+    <div class="conclusion">
+    <h2>Conclusão</h2>
+    <p>A integração do micro servo com o sensor ultrassônico HC-SR04 provou ser eficaz para aplicações de medição de distância e controle de movimento. O projeto demonstrou a importância da programação e montagem de circuitos em projetos de automação.</p>
+    </div>
+
+    <div class="imgs-projeto">
+      
+      <video max-width="300px" controls>
+        <source src="../imgs/rel-7/video1.mp4" type="video/mp4">
+      </video>
+
+    </div>
+  </body>
+</html>
