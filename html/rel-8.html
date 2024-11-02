@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/relatorios.css">
+    <title>Relatorio 8</title>
+</head>
+<body>
+    <a href="../index.html" target="_self" style="text-decoration: none; color: rgb(255, 255, 255);">Voltar</a>
+
+    <h2>Titulo</h2>
+
+    <p><strong>Integrantes:</strong> Luiz Felipe Guerra, João Pedro Costa Machado, Julio Cesar Florencio, Filipe André Nunes, Felipe Silva da Silva</p>
+
+    <main>
+        <section id="objetivo">
+            <h2>Objetivo</h2>
+            <p>O objetivo deste projeto é desenvolver um sistema usando Arduino que detecta a presença de cores (preto e branco) através de um sensor UV e controla um LED RGB. Quando o sensor detecta a cor preta, acende uma luz branca no LED; quando a cor branca é detectada, o LED se apaga.</p>
+        </section>
+
+        <section id="ferramentas">
+            <h2>Ferramentas e Componentes</h2>
+            <ul>
+                <li>Arduino Uno</li>
+                <li>Sensor de cor (TCS3200 ou similar)</li>
+                <li>LED RGB</li>
+                <li>Resistores (220Ω para o LED RGB)</li>
+                <li>Protoboard e fios de conexão</li>
+                <li>Software Tinkercad para simulação</li>
+            </ul>
+        </section>
+
+        <section id="montagem">
+            <h2>Montagem</h2>
+            <p>A montagem consiste na conexão do sensor de cor ao Arduino, bem como do LED RGB. As conexões são feitas da seguinte forma:</p>
+            <ul>
+                <li>Sensor de cor conectado às portas digitais do Arduino conforme datasheet (usando pinos para S0, S1, S2, S3 e OUT).</li>
+                <li>LED RGB conectado nas portas digitais do Arduino com resistores de 220Ω em cada terminal de cor (R, G, B).</li>
+            </ul>
+        </section>
+
+        <section id="codigo">
+            <h2>Código</h2>
+            <p>O código Arduino a seguir foi desenvolvido para ler a cor detectada pelo sensor. Ele verifica se a cor é preta ou branca e acende ou apaga o LED RGB com base nessa leitura:</p>
+            <code>
+                #include &lt;Wire.h&gt; <br>
+                int S2 = 2; <br>
+                int S3 = 3; <br>
+                int outPin = 4; <br>
+                int redPin = 9; <br>
+                int greenPin = 10; <br>
+                int bluePin = 11; <br><br>
+
+                void setup() { <br>
+                    pinMode(S2, OUTPUT); <br>
+                    pinMode(S3, OUTPUT); <br>
+                    pinMode(outPin, INPUT); <br>
+                    pinMode(redPin, OUTPUT); <br>
+                    pinMode(greenPin, OUTPUT); <br>
+                    pinMode(bluePin, OUTPUT); <br>
+                    Serial.begin(9600); <br>
+                } <br><br>
+
+                void loop() { <br>
+                    digitalWrite(S2, LOW); <br>
+                    digitalWrite(S3, LOW); <br>
+                    int freq = pulseIn(outPin, LOW); <br>
+                    Serial.println(freq); <br><br>
+
+                    if (freq &lt; 10) { // valor de exemplo para cor preta <br>
+                        digitalWrite(redPin, HIGH); <br>
+                        digitalWrite(greenPin, HIGH); <br>
+                        digitalWrite(bluePin, HIGH); <br>
+                    } else { <br>
+                        digitalWrite(redPin, LOW); <br>
+                        digitalWrite(greenPin, LOW); <br>
+                        digitalWrite(bluePin, LOW); <br>
+                    } <br>
+                    delay(500); <br>
+                } <br>
+            </code>
+        </section>
+
+        <section id="teste">
+            <h2>Teste no Tinkercad</h2>
+            <p>O projeto foi montado e testado no ambiente de simulação Tinkercad. Durante o teste, variamos as cores presentes na frente do sensor e observamos a resposta do LED RGB, que acendeu ao detectar preto e apagou ao detectar branco, como esperado.</p>
+        </section>
+
+        <section id="resultados">
+            <h2>Resultados</h2>
+            <p>Os testes mostraram que o sistema é capaz de detectar corretamente as cores preto e branco. Quando o sensor detecta a cor preta, o LED RGB acende em branco, enquanto ao detectar a cor branca, o LED apaga. O sistema é eficaz e a detecção foi precisa para as configurações estabelecidas.</p>
+        </section>
+
+        <section id="conclusao">
+            <h2>Conclusão</h2>
+            <p>Concluímos que o projeto atingiu o objetivo de forma satisfatória. Através do uso do sensor de cor e do LED RGB, o sistema demonstrou ser capaz de identificar as cores e responder com base nelas. A simulação no Tinkercad confirmou o funcionamento esperado, e o projeto pode ser expandido para outras aplicações de detecção de cores em projetos de automação e robótica.</p>
+        </section>
+
+        <div id="video-proj">
+            <video max-width="300px" controls>
+                <source src="../imgs/rel-8/projeto-8.mp4" type="video/mp4">
+            </video>
+        </div>
+    </main>
+    
+</body>
+</html>
