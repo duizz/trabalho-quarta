@@ -3,108 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/relatorios.css">
     <title>Relatorio 8</title>
+    <link rel="stylesheet" href="../css/relatorios.css">
 </head>
 <body>
     <a href="../index.html" target="_self" style="text-decoration: none; color: rgb(255, 255, 255);">Voltar</a>
 
-    <header>
-        <h1>Relatório de Projeto Arduino - Sensor de Cor e LED RGB</h1>
-    </header>
+    <h1>Relatório de Projeto Arduino: Controle de Micro Servos com Potenciômetros</h1>
 
     <p><strong>Integrantes:</strong> Luiz Felipe Guerra, João Pedro Costa Machado, Julio Cesar Florencio, Filipe André Nunes, Felipe Silva da Silva</p>
-
-    <main>
-        <section id="objetivo">
-            <h2>Objetivo</h2>
-            <p>O objetivo deste projeto é desenvolver um sistema usando Arduino que detecta a presença de cores (preto e branco) através de um sensor UV e controla um LED RGB. Quando o sensor detecta a cor preta, acende uma luz branca no LED; quando a cor branca é detectada, o LED se apaga.</p>
-        </section>
-
-        <section id="ferramentas">
-            <h2>Ferramentas e Componentes</h2>
-            <ul>
-                <li>Arduino Uno</li>
-                <li>Sensor de cor (TCS3200 ou similar)</li>
-                <li>LED RGB</li>
-                <li>Resistores (220Ω para o LED RGB)</li>
-                <li>Protoboard e fios de conexão</li>
-                <li>Software Tinkercad para simulação</li>
-            </ul>
-        </section>
-
-        <section id="montagem">
-            <h2>Montagem</h2>
-            <p>A montagem consiste na conexão do sensor de cor ao Arduino, bem como do LED RGB. As conexões são feitas da seguinte forma:</p>
-            <ul>
-                <li>Sensor de cor conectado às portas digitais do Arduino conforme datasheet (usando pinos para S0, S1, S2, S3 e OUT).</li>
-                <li>LED RGB conectado nas portas digitais do Arduino com resistores de 220Ω em cada terminal de cor (R, G, B).</li>
-            </ul>
-        </section>
-
-        <section id="codigo">
-            <h2>Código</h2>
-            <p>O código Arduino a seguir foi desenvolvido para ler a cor detectada pelo sensor. Ele verifica se a cor é preta ou branca e acende ou apaga o LED RGB com base nessa leitura:</p>
-            <code>
-                #include &lt;Wire.h&gt; <br>
-                int S2 = 2; <br>
-                int S3 = 3; <br>
-                int outPin = 4; <br>
-                int redPin = 9; <br>
-                int greenPin = 10; <br>
-                int bluePin = 11; <br><br>
-
-                void setup() { <br>
-                    pinMode(S2, OUTPUT); <br>
-                    pinMode(S3, OUTPUT); <br>
-                    pinMode(outPin, INPUT); <br>
-                    pinMode(redPin, OUTPUT); <br>
-                    pinMode(greenPin, OUTPUT); <br>
-                    pinMode(bluePin, OUTPUT); <br>
-                    Serial.begin(9600); <br>
-                } <br><br>
-
-                void loop() { <br>
-                    digitalWrite(S2, LOW); <br>
-                    digitalWrite(S3, LOW); <br>
-                    int freq = pulseIn(outPin, LOW); <br>
-                    Serial.println(freq); <br><br>
-
-                    if (freq &lt; 10) { // valor de exemplo para cor preta <br>
-                        digitalWrite(redPin, HIGH); <br>
-                        digitalWrite(greenPin, HIGH); <br>
-                        digitalWrite(bluePin, HIGH); <br>
-                    } else { <br>
-                        digitalWrite(redPin, LOW); <br>
-                        digitalWrite(greenPin, LOW); <br>
-                        digitalWrite(bluePin, LOW); <br>
-                    } <br>
-                    delay(500); <br>
-                } <br>
-            </code>
-        </section>
-
-        <section id="teste">
-            <h2>Teste no Tinkercad</h2>
-            <p>O projeto foi montado e testado no ambiente de simulação Tinkercad. Durante o teste, variamos as cores presentes na frente do sensor e observamos a resposta do LED RGB, que acendeu ao detectar preto e apagou ao detectar branco, como esperado.</p>
-        </section>
-
-        <section id="resultados">
-            <h2>Resultados</h2>
-            <p>Os testes mostraram que o sistema é capaz de detectar corretamente as cores preto e branco. Quando o sensor detecta a cor preta, o LED RGB acende em branco, enquanto ao detectar a cor branca, o LED apaga. O sistema é eficaz e a detecção foi precisa para as configurações estabelecidas.</p>
-        </section>
-
-        <section id="conclusao">
-            <h2>Conclusão</h2>
-            <p>Concluímos que o projeto atingiu o objetivo de forma satisfatória. Através do uso do sensor de cor e do LED RGB, o sistema demonstrou ser capaz de identificar as cores e responder com base nelas. A simulação no Tinkercad confirmou o funcionamento esperado, e o projeto pode ser expandido para outras aplicações de detecção de cores em projetos de automação e robótica.</p>
-        </section>
-
-        <div id="video-proj">
-            <video max-width="300px" controls>
-                <source src="../imgs/rel-8/projeto-8.mp4" type="video/mp4">
-            </video>
-        </div>
-    </main>
     
+    <h2>Objetivo</h2>
+    <p>O objetivo deste projeto é controlar o movimento de dois micro servos utilizando dois potenciômetros, um para cada servo. Os potenciômetros atuarão como controladores manuais para ajustar a posição das hélices dos servos, variando o ângulo de 0 a 180 graus.</p>
+
+    <h2>Ferramentas e Componentes</h2>
+    <ul>
+        <li>Placa Arduino Uno</li>
+        <li>2 micro servos (SG90 ou similar)</li>
+        <li>2 potenciômetros de 10kΩ</li>
+        <li>Protoboard e cabos jumper</li>
+        <li>Software Arduino IDE</li>
+        <li>Cabo USB para conexão do Arduino</li>
+    </ul>
+
+    <h2>Montagem</h2>
+    <p>A montagem consiste em conectar cada potenciômetro ao Arduino e a um dos micro servos. Abaixo estão as instruções de conexão:</p>
+    <ul>
+        <li>Conecte o pino VCC de cada potenciômetro ao 5V do Arduino.</li>
+        <li>Conecte o pino GND dos potenciômetros ao GND do Arduino.</li>
+        <li>Conecte o pino de saída de sinal do primeiro potenciômetro ao pino analógico A0 do Arduino, e o do segundo potenciômetro ao pino A1.</li>
+        <li>Conecte o fio de sinal do primeiro servo ao pino digital 9 do Arduino e o do segundo servo ao pino digital 10.</li>
+        <li>Conecte o VCC e o GND de cada servo ao 5V e GND do Arduino.</li>
+    </ul>
+
+    <h2>Código</h2>
+    <p>O código a seguir utiliza a biblioteca Servo.h para controlar o ângulo de cada servo conforme o valor lido nos potenciômetros. O valor analógico de cada potenciômetro é convertido em um ângulo para o servo correspondente.</p>
+    <pre><code>
+#include &lt;Servo.h&gt;
+
+Servo servo1;
+Servo servo2;
+
+int potPin1 = A0;
+int potPin2 = A1;
+int servoPin1 = 9;
+int servoPin2 = 10;
+
+void setup() {
+    servo1.attach(servoPin1);
+    servo2.attach(servoPin2);
+}
+
+void loop() {
+    int potValue1 = analogRead(potPin1);
+    int potValue2 = analogRead(potPin2);
+
+    int angle1 = map(potValue1, 0, 1023, 0, 180);
+    int angle2 = map(potValue2, 0, 1023, 0, 180);
+
+    servo1.write(angle1);
+    servo2.write(angle2);
+
+    delay(15);
+}
+    </code></pre>
+
+    <h2>Teste</h2>
+    <p>Para realizar o teste, siga os seguintes passos:</p>
+    <ol>
+        <li>Carregue o código no Arduino usando a IDE do Arduino.</li>
+        <li>Após o upload, mova cada potenciômetro e observe o movimento das hélices dos servos.</li>
+        <li>Ajuste cada potenciômetro lentamente para verificar a resposta de cada servo de acordo com o ângulo desejado.</li>
+    </ol>
+
+    <h2>Resultados</h2>
+    <p>Durante os testes, cada potenciômetro foi capaz de controlar o ângulo de seu respectivo servo, variando de 0 a 180 graus. A resposta dos servos foi suave e rápida, seguindo a posição do potenciômetro quase que instantaneamente. A precisão do controle foi satisfatória para o propósito do projeto.</p>
+
+    <h2>Conclusão</h2>
+    <p>O projeto foi bem-sucedido em demonstrar o controle de dois servos independentes por meio de potenciômetros. Esse sistema pode ser aplicado em projetos onde controle preciso e manual de ângulo é necessário, como em robótica ou controles de posição. Melhorias futuras poderiam incluir a calibração do sistema para suavizar ainda mais o movimento ou adicionar múltiplos servos e potenciômetros para projetos mais complexos.</p>
+    
+    <video max-width="300px" controls>
+        <source src="../imgs/rel-8/projeto-8.mp4" type="video/mp4">
+    </video>
 </body>
 </html>
